@@ -4,5 +4,5 @@
 
 | Name Surname (initials) | GUID                                     |
 | ----------------------- | ---------------------------------------- |
-| AB                      | `{FD9D086C-532F-4AAC-BB99-69D7798837D8}` |
-| Jan Kowalski            | `{44FBFCF5-4430-4964-878D-1867DC679E0D}` |
+| Wojciech Stefaniak      | `{B2A28D35-A39F-4D13-A054-E2CE203A3E30}` |
+| Kinga Wawrzyńczak       | `{AE04CD2C-CFD8-4E0B-8CE6-33063A86F62A}` |
