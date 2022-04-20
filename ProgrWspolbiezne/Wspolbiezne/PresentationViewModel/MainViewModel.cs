@@ -2,8 +2,8 @@
 
 namespace PresentationViewModel
 {
-    public class Class1
+    public class MainViewModel
     {
-
+        
     }
 }

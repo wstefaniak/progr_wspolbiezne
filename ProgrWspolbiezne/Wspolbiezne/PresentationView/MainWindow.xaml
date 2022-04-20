@@ -4,9 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationView"
+        xmlns:vm="clr-namespace:PresentationViewModel;assembly=PresentationViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}"
+        Height="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenHeightKey}}"
+        Background="AliceBlue">
 
-    </Grid>
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    
+    
+    <Border BorderBrush="BlueViolet" BorderThickness="8">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.ColumnSpan="1"
+                    BorderThickness="0, 0, 7, 0"
+                    BorderBrush="BlueViolet">
+
+            </Border>
+
+            <Border Grid.Column="1" Margin="0,0,0,826">
+                <Button Content="Start"
+                    Command="{Binding StartCommand}" Margin="76,72,76,-77" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2"/>
+            </Border>
+
+            <Border Grid.Column="1" Margin="0,0,0,826">
+                <Button Content="Stop"
+                    Command="{Binding StopCommand}" Margin="76,265,76,-270" Click="Button_Click_1" FontSize="32" FontWeight="Normal" Background="#FFAFAFAF" BorderBrush="#FF1D49A2"/>
+            </Border>
+
+        </Grid>
+
+    </Border>
+
+
 </Window>
