@@ -1,36 +1,31 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Logic
 {
     public class BallMethods
     {
-      
-       /// private readonly int _windowHeight;
-       /// private readonly int _windowWidth;
+
+        private Point _center;
+        private Point _moveDirection;
         private readonly int _radius;
 
+        public int Radius { get { return _radius; } }
+        public Point Center { get { return _center; } }
+        public Point MoveDirection { get { return _moveDirection; } }
 
-        public BallMethods(int radius)
+
+        public BallMethods(int xPoint, int yPoint,int radius)
         {
+            _center = new Point(xPoint, yPoint);
             _radius = radius;
 
         }
 
-        public void CreateABall()
+        public void newPoint()
         {
-            int xPoint = 0;
-            int yPoint = 0;
             Random random = new Random();
-            
-
-        }
-
-        public void GenerateBalls(int balls)
-        {
-            for (int i = 0; i < balls; balls++)
-            {
-                CreateABall(); 
-            }
+            _moveDirection = new Point(random.Next(-1, 2), random.Next(-1, 2));
         }
     }
 }
