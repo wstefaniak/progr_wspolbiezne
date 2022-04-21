@@ -27,5 +27,15 @@ namespace Logic
             Random random = new Random();
             _moveDirection = new Point(random.Next(-1, 2), random.Next(-1, 2));
         }
+
+        public void Move(int topPosition, int rightPosition, int bottomPosition, int leftPosition)
+        {
+            while () 
+            
+            { /// warunki do zrobienia}
+
+            _center.Offset(_moveDirection);
+        }
+
     }
 }
