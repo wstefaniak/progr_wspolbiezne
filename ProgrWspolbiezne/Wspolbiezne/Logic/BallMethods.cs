@@ -1,41 +1,54 @@
-﻿using System;
-using System.Drawing;
+﻿using System.ComponentModel;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Logic
 {
-    public class BallMethods
+    public class BallMethods : INotifyPropertyChanged
     {
+        private Vector2 _center;
+        private Vector2 _moveDirection;
 
-        private Point _center;
-        private Point _moveDirection;
-        private readonly int _radius;
-
-        public int Radius { get { return _radius; } }
-        public Point Center { get { return _center; } }
-        public Point MoveDirection { get { return _moveDirection; } }
-
-
-        public BallMethods(int xPoint, int yPoint,int radius)
+        public BallMethods()
         {
-            _center = new Point(xPoint, yPoint);
-            _radius = radius;
 
         }
 
-        public void newPoint()
+        public float X { get => _center.X; }
+        public float Y { get => _center.Y; }
+        public double Radius { get; } = 35;
+
+        public Vector2 Center
         {
-            Random random = new Random();
-            _moveDirection = new Point(random.Next(-1, 2), random.Next(-1, 2));
+            get => _center;
+            set => _center = value;
         }
 
-        public void Move(int topPosition, int rightPosition, int bottomPosition, int leftPosition)
+        public Vector2 MoveDirection
         {
-            while () 
-            
-            { /// warunki do zrobienia}
-
-            _center.Offset(_moveDirection);
+            get => _moveDirection;
+            set => _moveDirection = value;
         }
 
+        public void Move()
+        {
+            Center += new Vector2(_moveDirection.X, _moveDirection.Y);
+            if (Center.X < Radius || Center.X > BoardMethods.BoardWidth)
+            {
+                _moveDirection.X *= -1;
+            }
+            if (Center.Y < Radius || Center.Y > BoardMethods.BoardHeight)
+            {
+                _moveDirection.Y *= -1;
+            }
+            RaisePropertyChanged(nameof(X));
+            RaisePropertyChanged(nameof(Y));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
