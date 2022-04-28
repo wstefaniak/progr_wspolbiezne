@@ -41,10 +41,17 @@ namespace PresentationViewModel
         }
         private void Start()
         {
-            ModelLayer.Balls(_amount);
-            ModelLayer.StartMove();
-            _isStopEnabled = true;
-            StopCommand.RaiseCanExecuteChanged();
+            if (_amount == 0)
+            {
+                ModelLayer.StopMove();
+            }
+            else
+            {
+                ModelLayer.Balls(_amount);
+                ModelLayer.StartMove();
+                _isStopEnabled = true;
+                StopCommand.RaiseCanExecuteChanged();
+            }
         }
 
         private bool CanStart()
