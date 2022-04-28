@@ -10,8 +10,9 @@ namespace PresentationViewModel
         private readonly int _width, _height;
         private int _amount;
         private IList _balls;
-        public ICommand StartCommand { get; set; }
-        public ICommand StopCommand { get; set; }
+        private bool _isStopEnabled;
+        public RelayCommand StartCommand { get; set; }
+        public RelayCommand StopCommand { get; set; }
         public MainViewModel() : this(ModelAbstractApi.CreateApi())
         {
         }
@@ -22,8 +23,9 @@ namespace PresentationViewModel
             _height = ModelLayer.Height;
             _width = ModelLayer.Width;
             Balls = ModelLayer.Balls(_amount);
-            StartCommand = new RelayCommand(() => Start());
-            StopCommand = new RelayCommand(() => Stop());
+            StartCommand = new RelayCommand(Start, CanStart);
+            StopCommand = new RelayCommand(Stop, CanStop);
+            _isStopEnabled = false;
         }
         public int Height { get { return _height; } }
         public int Width { get { return _width; } }
@@ -41,11 +43,24 @@ namespace PresentationViewModel
         {
             ModelLayer.Balls(_amount);
             ModelLayer.StartMove();
+            _isStopEnabled = true;
+            StopCommand.RaiseCanExecuteChanged();
+        }
+
+        private bool CanStart()
+        {
+            return _isStopEnabled == false;
         }
 
         private void Stop()
         {
             ModelLayer.StopMove();
+            _isStopEnabled = false;
+            StartCommand.RaiseCanExecuteChanged();
+        }
+        private bool CanStop()
+        {
+            return _isStopEnabled;
         }
     }
 }
