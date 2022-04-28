@@ -10,7 +10,7 @@ namespace Logic
     public class BoardMethods
     {
         public static int BoardWidth = 1280;
-        public static int BoardHeight = 950;
+        public static int BoardHeight = 800;
         private ObservableCollection<BallMethods> _balls = new ObservableCollection<BallMethods>();
         private List<Task> _tasks = new List<Task>();
         public CancellationTokenSource _cts;

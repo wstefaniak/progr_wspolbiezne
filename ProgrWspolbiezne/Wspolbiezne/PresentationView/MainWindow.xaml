@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationView"
-        xmlns:vm="clr-namespace:PresentationViewModel;assembly=PresentationViewModel" mc:Ignorable="d" Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenHeightKey}}" Background="AliceBlue">
+        xmlns:vm="clr-namespace:PresentationViewModel;assembly=PresentationViewModel" mc:Ignorable="d" Width="1280" Height="800" Background="AliceBlue" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainViewModel/>
@@ -39,20 +39,20 @@
             </Border>
 
             <Border Grid.Column="2">
-                <Label Content="Choose amount of balls&#xD;&#xA;" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" FontSize="32"/>
+                <Label Content="Choose the amount of balls&#xD;&#xA;" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" FontSize="26"/>
             </Border>
 
             <Border Grid.Column="2">
-                <TextBox HorizontalAlignment="Center" Margin="0,151,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="138" Height="85" FontSize="58" TextAlignment="Center"/>
+                <TextBox HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="138" Height="85" FontSize="58" TextAlignment="Center"/>
             </Border>
 
 
-            <Border Grid.Column="2" Margin="10,0,-10,0">
-                <Button HorizontalAlignment="Center" Content="Start" Command="{Binding StartCommand}" Margin="0,368,0,448" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="390" Height="170"/>
+            <Border Grid.Column="2" Margin="0,0,-10,0">
+                <Button HorizontalAlignment="Center" Content="Start" Command="{Binding StartCommand}" Margin="0,275,0,400" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="204"/>
             </Border>
 
-            <Border Grid.Column="2" Margin="10,0,-10,0" RenderTransformOrigin="0.667,0.471">
-                <Button HorizontalAlignment="Center" Content="Stop" Command="{Binding StopCommand}" Margin="0,592,0,222" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="390" Height="170"/>
+            <Border Grid.Column="2" Margin="0,0,-10,0" RenderTransformOrigin="0.667,0.471">
+                <Button HorizontalAlignment="Center" Content="Stop" Command="{Binding StopCommand}" Margin="0,382,0,292" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="206"/>
             </Border>
 
         </Grid>
