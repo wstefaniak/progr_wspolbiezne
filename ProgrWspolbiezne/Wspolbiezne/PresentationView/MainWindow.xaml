@@ -48,11 +48,11 @@
 
 
             <Border Grid.Column="1" Margin="0,0,-10,0">
-                <Button HorizontalAlignment="Center" Content="Start" Command="{Binding StartCommand}" Margin="0,275,0,366" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="204"/>
+                <Button HorizontalAlignment="Center" Content="Start" Command="{Binding StartCommand}" Margin="0,275,0,366" FontSize="32" Background="#FFBBC4EA" BorderBrush="#FF1D49A2" Width="204"/>
             </Border>
 
             <Border Grid.Column="1" Margin="0,0,-10,0" RenderTransformOrigin="0.667,0.471">
-                <Button HorizontalAlignment="Center" Content="Stop" Command="{Binding StopCommand}" Margin="0,367,0,275" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="204"/>
+                <Button HorizontalAlignment="Center" Content="Stop" Command="{Binding StopCommand}" Margin="0,367,0,275" FontSize="32" Background="#FFBBC4EA" BorderBrush="#FF1D49A2" Width="204"/>
             </Border>
 
         </Grid>
