@@ -13,6 +13,8 @@ namespace Logic
         public static int BoardHeight = 950;
         private ObservableCollection<BallMethods> _balls = new ObservableCollection<BallMethods>();
         private List<Task> _tasks = new List<Task>();
+        public CancellationTokenSource _cts;
+        public CancellationToken _ct;
 
         public BoardMethods()
         {
@@ -36,17 +38,25 @@ namespace Logic
                 throw new Exception("Invalid input");
             }
 
-            if (Balls.Count != 0)
+            if (Balls.Count == 0)
             {
                 _tasks.Clear();
                 Balls.Clear();
             }
-
+            _cts = new CancellationTokenSource();
+            _ct = _cts.Token;
             for (int i = 0; i < amount; i++)
             {
+                bool tmp = true;
+                int g = 0, h = 0;
                 BallMethods ball = new BallMethods();
-                ball.MoveDirection = new Vector2((float)3.75, (float)3.75);
                 ball.Center = new Vector2(random.Next(50, BoardWidth-50), random.Next(50, BoardHeight-50));
+                while(tmp) { 
+                    g = random.Next(-2, 2);
+                    h = random.Next(-2, 2);
+                    if (g != 0 && h != 0) { tmp = false; }
+                }
+                ball.MoveDirection = new Vector2(g*random.Next(1, 5), h*random.Next(1, 5));
                 _balls.Add(ball);
             }
         }
@@ -58,8 +68,16 @@ namespace Logic
                 {
                     while (true)
                     {
+                        try
+                        {
+                            _ct.ThrowIfCancellationRequested();
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            break;
+                        }
                         ball.Move();
-                        Thread.Sleep(10);
+                        Thread.Sleep(5);
                     }
                 }
                 );
@@ -68,6 +86,7 @@ namespace Logic
         }
         public void Stop()
         {
+            _cts.Cancel();
             _tasks.Clear();
             _balls.Clear();
         }
