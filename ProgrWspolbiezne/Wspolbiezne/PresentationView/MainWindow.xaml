@@ -4,21 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationView"
-        xmlns:vm="clr-namespace:PresentationViewModel;assembly=PresentationViewModel" mc:Ignorable="d" Width="1280" Height="800" Background="AliceBlue" WindowStartupLocation="CenterScreen">
+        xmlns:vm="clr-namespace:PresentationViewModel;assembly=PresentationViewModel" mc:Ignorable="d" Width="1280" Height="770" Background="AliceBlue" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
 
-    <Border BorderBrush="DarkSlateBlue" BorderThickness="10">
+    <Border BorderBrush="DarkSlateBlue" BorderThickness="10,10,10,17" Margin="0,0,0,-6">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="7*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.ColumnSpan="1" BorderThickness="0, 0, 7, 0" BorderBrush="DarkSlateBlue">
-                <ItemsControl ItemsSource="{Binding Balls, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Width="1320" Margin="0,10,0,0">
+            <Border BorderThickness="0, 0, 10, 0" BorderBrush="DarkSlateBlue">
+                <ItemsControl ItemsSource="{Binding Balls, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Width="1480" Margin="-30,-25,0,0" RenderTransformOrigin="0.435,0.501" Height="817" VerticalAlignment="Top">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas/>
@@ -38,21 +38,21 @@
                 </ItemsControl>
             </Border>
 
-            <Border Grid.Column="2">
+            <Border Grid.Column="1">
                 <Label Content="Choose the amount of balls&#xD;&#xA;" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" FontSize="26"/>
             </Border>
 
-            <Border Grid.Column="2">
+            <Border Grid.Column="1">
                 <TextBox HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="138" Height="85" FontSize="58" TextAlignment="Center"/>
             </Border>
 
 
-            <Border Grid.Column="2" Margin="0,0,-10,0">
-                <Button HorizontalAlignment="Center" Content="Start" Command="{Binding StartCommand}" Margin="0,275,0,400" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="204"/>
+            <Border Grid.Column="1" Margin="0,0,-10,0">
+                <Button HorizontalAlignment="Center" Content="Start" Command="{Binding StartCommand}" Margin="0,275,0,366" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="204"/>
             </Border>
 
-            <Border Grid.Column="2" Margin="0,0,-10,0" RenderTransformOrigin="0.667,0.471">
-                <Button HorizontalAlignment="Center" Content="Stop" Command="{Binding StopCommand}" Margin="0,382,0,292" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="206"/>
+            <Border Grid.Column="1" Margin="0,0,-10,0" RenderTransformOrigin="0.667,0.471">
+                <Button HorizontalAlignment="Center" Content="Stop" Command="{Binding StopCommand}" Margin="0,367,0,275" FontSize="32" Background="#FFAFAFAF" BorderBrush="#FF1D49A2" Width="204"/>
             </Border>
 
         </Grid>
