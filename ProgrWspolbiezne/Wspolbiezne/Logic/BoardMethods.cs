@@ -41,7 +41,7 @@ namespace Logic
             ball1.MoveDirection = direction1;
             ball2.MoveDirection = direction2;
         }
-        public async void Collision(int Width, int Height, Ball ball)
+        public void Collision(int Width, int Height, Ball ball)
         {
             foreach (BallMethods ballMethods in _balls)
             {

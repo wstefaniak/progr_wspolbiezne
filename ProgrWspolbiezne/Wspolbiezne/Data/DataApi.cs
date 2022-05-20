@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Data
 {
-    internal class DataApi : DataAbstractApi
+    public class DataApi : DataAbstractApi
     {
         private Board _board = new Board();
         public DataApi() { }
