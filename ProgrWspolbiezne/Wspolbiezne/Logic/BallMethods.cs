@@ -1,48 +1,67 @@
 ﻿using System.ComponentModel;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Data;
 
 namespace Logic
 {
     public class BallMethods : INotifyPropertyChanged
     {
-        private Vector2 _center;
-        private Vector2 _moveDirection;
-
-        public BallMethods()
+        private readonly Ball _ball;
+        public Ball Ball { get { return _ball; } }
+        public BallMethods(Ball ball)
         {
-
+            _ball = ball;
+            ball.PropertyChanged += BallPropertyChanged;
         }
 
-        public float X { get => _center.X; }
-        public float Y { get => _center.Y; }
-        public double Radius { get; } = 35;
-
-        public Vector2 Center
+        public float X
         {
-            get => _center;
-            set => _center = value;
-        }
-
-        public Vector2 MoveDirection
-        {
-            get => _moveDirection;
-            set => _moveDirection = value;
-        }
-
-        public void Move()
-        {
-            Center += new Vector2(_moveDirection.X, _moveDirection.Y);
-            if (Center.X < Radius || Center.X > BoardMethods.BoardWidth)
+            get { return _ball.X; }
+            set
             {
-                _moveDirection.X *= -1;
+                _ball.X = value;
+                RaisePropertyChanged(nameof(_ball.X));
             }
-            if (Center.Y < Radius || Center.Y > BoardMethods.BoardHeight)
+        }
+        public float Y
+        {
+            get { return _ball.Y; }
+            set
             {
-                _moveDirection.Y *= -1;
+                _ball.Y = value;
+                RaisePropertyChanged(nameof(_ball.Y));
             }
-            RaisePropertyChanged(nameof(X));
-            RaisePropertyChanged(nameof(Y));
+        }
+
+        public int Radius
+        {
+            get { return _ball.Radius; }
+        }
+
+        public float DirectionX
+        {
+            get { return _ball.DirectionX; }
+            set
+            {
+                _ball.DirectionX = value;
+                RaisePropertyChanged(nameof(_ball.DirectionX));
+            }
+        }
+
+        public float DirectionY
+        {
+            get { return _ball.DirectionY; }
+            set
+            {
+                _ball.DirectionY = value;
+                RaisePropertyChanged(nameof(_ball.DirectionY));
+            }
+        }
+
+        public void BallPropertyChanged(object obj, PropertyChangedEventArgs args)
+        {
+            RaisePropertyChanged(nameof(_ball.Center));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

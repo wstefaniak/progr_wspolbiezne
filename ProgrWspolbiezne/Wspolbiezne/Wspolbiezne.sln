@@ -10,10 +10,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationViewModel", "PresentationViewModel\PresentationViewModel.csproj", "{49A2518F-111E-4860-BC05-A5CAE76D9D27}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{0CA2C403-E6C8-419F-92A5-046CEB6343C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{47D2D668-0881-4163-8E4D-BD37BB4381EC} = {47D2D668-0881-4163-8E4D-BD37BB4381EC}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{47D2D668-0881-4163-8E4D-BD37BB4381EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{94E52B3B-E22E-4CBB-B110-16E133A21D7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{94E52B3B-E22E-4CBB-B110-16E133A21D7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

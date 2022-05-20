@@ -1,94 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Numerics;
-using System.Threading;
-using System.Threading.Tasks;
+using Data;
+using System.Collections.ObjectModel;
 
 namespace Logic
 {
-    public class BoardMethods
+    public class BoardMethods : AbstractBoardMethods
     {
-        public static int BoardWidth = 830;
-        public static int BoardHeight = 700;
-        private ObservableCollection<BallMethods> _balls = new ObservableCollection<BallMethods>();
-        private List<Task> _tasks = new List<Task>();
-        public CancellationTokenSource _cts;
-        public CancellationToken _ct;
-
-        public BoardMethods()
+        private readonly DataAbstractApi _data;
+        public BoardMethods(DataAbstractApi dataAbstractApi)
         {
-        }
-        public ObservableCollection<BallMethods> Balls
-            {
-                get => _balls;
-            }
-
-        public int TasksAmount
-        {
-            get => _tasks.Count;
+            _data = dataAbstractApi;
         }
 
-        public void CreateBalls(int amount)
+        public override int Height { get { return _data.Height; } }
+        public override int Width { get { return _data.Width; } }
+
+        public override void CreateBalls(int amount)
         {
-            Random random = new Random();
-
-            if (amount < 0)
+            _balls = new List<BallMethods>();
+            _data.CreateBalls(amount);
+            foreach (Ball ball in _data.GetBalls())
             {
-                throw new Exception("Invalid input");
-            }
-
-            if (Balls.Count == 0)
-            {
-                _tasks.Clear();
-                Balls.Clear();
-            }
-            _cts = new CancellationTokenSource();
-            _ct = _cts.Token;
-            for (int i = 0; i < amount; i++)
-            {
-                bool tmp = true;
-                int g = 0, h = 0;
-                BallMethods ball = new BallMethods();
-                ball.Center = new Vector2(random.Next(50, BoardWidth-50), random.Next(50, BoardHeight-50));
-                while(tmp) { 
-                    g = random.Next(-2, 2);
-                    h = random.Next(-2, 2);
-                    if (g != 0 && h != 0) { tmp = false; }
-                }
-                ball.MoveDirection = new Vector2(g*random.Next(1, 5), h*random.Next(1, 5));
-                _balls.Add(ball);
+                _balls.Add(new BallMethods(ball));
+                ball.PropertyChanged += CollisionCheck;
             }
         }
-        public void Start()
+
+        public override void StartMove() => _data.StartMove();
+        public override void StopMove() => _data.StopMove();
+        public override List<BallMethods> GetBalls() => _balls;
+        public override ObservableCollection<Ball> Balls => _data.GetBalls();
+
+        public void Bounce(Ball ball1, Ball ball2)
         {
-            foreach (BallMethods ball in _balls)
+            Vector2 direction1 = ball1.MoveDirection - (2 * ball2.Mass / (ball1.Mass + ball2.Mass) * Vector2.Dot(ball1.MoveDirection - ball2.MoveDirection, ball1.Center - ball2.Center) / (ball1.Center - ball2.Center).LengthSquared() * (ball1.Center - ball2.Center));
+            Vector2 direction2 = ball2.MoveDirection - (2 * ball1.Mass / (ball1.Mass + ball2.Mass) * Vector2.Dot(ball2.MoveDirection - ball1.MoveDirection, ball2.Center - ball1.Center) / (ball2.Center - ball1.Center).LengthSquared() * (ball2.Center - ball1.Center));
+            ball1.MoveDirection = direction1;
+            ball2.MoveDirection = direction2;
+        }
+        public async void Collision(int Width, int Height, Ball ball)
+        {
+            foreach (BallMethods ballMethods in _balls)
             {
-                Task task = Task.Run(() =>
+                float distanceBefore = Vector2.Distance(ballMethods.Ball.Center, ball.Center);
+                float distanceAfter = Vector2.Distance(ballMethods.Ball.Center + ballMethods.Ball.MoveDirection, ball.Center + ball.MoveDirection);
+                if (ballMethods.Ball == ball) { continue; }
+                if (distanceBefore <= ballMethods.Ball.Radius + ball.Radius)
                 {
-                    while (true)
+                    if (distanceBefore - distanceAfter > 0)
                     {
-                        try
-                        {
-                            _ct.ThrowIfCancellationRequested();
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            break;
-                        }
-                        ball.Move();
-                        Thread.Sleep(5);
+                        Bounce(ball, ballMethods.Ball);
                     }
                 }
-                );
-                _tasks.Add(task);
             }
+            if (ball.Center.X < ball.Radius || ball.Center.X > Width) { ball.DirectionX *= -1; }
+            if (ball.Center.Y < ball.Radius || ball.Center.Y > Height) { ball.DirectionY *= -1; }
         }
-        public void Stop()
+
+        public void CollisionCheck(object obj, PropertyChangedEventArgs args)
         {
-            _cts.Cancel();
-            _tasks.Clear();
-            _balls.Clear();
+            Ball ball = (Ball)obj;
+            if (args.PropertyName == "_center")
+            {
+                Collision(Width, Height, ball);
+            }
         }
     }
 }

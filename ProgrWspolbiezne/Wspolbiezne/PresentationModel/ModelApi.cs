@@ -5,24 +5,34 @@ namespace PresentationModel
 {
     internal class ModelApi : ModelAbstractApi
     {
-        private readonly BoardMethods Board = new BoardMethods();
-        public override int Width => BoardMethods.BoardWidth;
-        public override int Height => BoardMethods.BoardHeight;
-
-        public override ObservableCollection<BallMethods> Balls(int amount)
+        private readonly AbstractBoardMethods board;
+        public override int Width => board.Width;
+        public override int Height => board.Height;
+        public ModelApi(AbstractBoardMethods abstractBoardMethods)
         {
-            Board.CreateBalls(amount);
-            return Board.Balls;
+            board = abstractBoardMethods;
+        }
+
+        public override ObservableCollection<BallModel> CreateBalls(int amount)
+        {
+            board.CreateBalls(amount);
+            ballModel.Clear();
+            foreach(BallMethods ball in board.GetBalls())
+            {
+                ballModel.Add(new BallModel(ball));
+            }
+            return ballModel;
         }
 
         public override void StartMove()
         {
-            Board.Start();
+            board.StartMove();
         }
 
         public override void StopMove()
         {
-            Board.Stop();
+            board?.StopMove();
+            ballModel?.Clear();
         }
     }
 }

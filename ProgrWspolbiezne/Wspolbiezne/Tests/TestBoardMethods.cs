@@ -11,14 +11,14 @@ namespace Tests
         [TestMethod]
         public void TestConstructor()
         {
-            BoardMethods board = new BoardMethods();
+            AbstractBoardMethods board = new AbstractBoardMethods();
             Assert.AreEqual(0, board.Balls.Count);
         }
 
         [TestMethod]
         public void TestCreateBalls()
         {
-            BoardMethods board = new BoardMethods();
+            AbstractBoardMethods board = new AbstractBoardMethods();
             board.CreateBalls(amount);
             Assert.AreEqual(amount, board.Balls.Count);
             board.Balls.Clear();
@@ -30,7 +30,7 @@ namespace Tests
         [TestMethod]
         public void TestClearBalls()
         {
-            BoardMethods board = new BoardMethods();
+            AbstractBoardMethods board = new AbstractBoardMethods();
             board.CreateBalls(amount);
             Assert.AreEqual(amount, board.Balls.Count);
             board.Balls.Clear();
@@ -40,7 +40,7 @@ namespace Tests
         [TestMethod]
         public void TestStartStop()
         {
-            BoardMethods board = new BoardMethods();
+            AbstractBoardMethods board = new AbstractBoardMethods();
             board.CreateBalls(amount);
             Assert.AreEqual(amount, board.Balls.Count);
             board.Start();

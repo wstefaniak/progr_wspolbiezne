@@ -6,23 +6,20 @@ namespace PresentationViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly ModelAbstractApi ModelLayer;
+        private ModelAbstractApi ModelLayer { get; set; }
         private readonly int _width, _height;
         private int _amount;
         private IList _balls;
         private bool _isStopEnabled;
         public RelayCommand StartCommand { get; set; }
         public RelayCommand StopCommand { get; set; }
-        public MainViewModel() : this(ModelAbstractApi.CreateApi())
-        {
-        }
 
-        public MainViewModel(ModelAbstractApi modelAbstractApi)
+        public MainViewModel()
         {
-            ModelLayer = modelAbstractApi;
-            _height = ModelLayer.Height;
+            ModelLayer = ModelAbstractApi.CreateApi();
             _width = ModelLayer.Width;
-            Balls = ModelLayer.Balls(_amount);
+            _height = ModelLayer.Height;
+            Balls = ModelLayer.CreateBalls(_amount);
             StartCommand = new RelayCommand(Start, CanStart);
             StopCommand = new RelayCommand(Stop, CanStop);
             _isStopEnabled = false;
@@ -47,7 +44,7 @@ namespace PresentationViewModel
             }
             else
             {
-                ModelLayer.Balls(_amount);
+                ModelLayer.CreateBalls(_amount);
                 ModelLayer.StartMove();
                 _isStopEnabled = true;
                 StopCommand.RaiseCanExecuteChanged();

@@ -8,13 +8,20 @@ namespace PresentationModel
         public abstract int Width { get; }
         public abstract int Height { get; }
 
-        public abstract ObservableCollection<BallMethods> Balls(int balls);
+        protected ObservableCollection<BallModel> ballModel = new ObservableCollection<BallModel>();
+        public abstract ObservableCollection<BallModel> CreateBalls(int amount);
         public abstract void StartMove();
         public abstract void StopMove();
 
-        public static ModelAbstractApi CreateApi()
+        public static ModelAbstractApi CreateApi(AbstractBoardMethods abstractBoardMethods = default)
         {
-            return new ModelApi();
+            return new ModelApi(abstractBoardMethods ?? AbstractBoardMethods.CreateBoard());
+        }
+
+        public ObservableCollection<BallModel> Balls
+        {
+            get => ballModel;
+            set => ballModel = value;
         }
     }
 }
