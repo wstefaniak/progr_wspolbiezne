@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using PresentationModel;
+﻿using PresentationModel;
 using System.Collections;
 
 namespace PresentationViewModel

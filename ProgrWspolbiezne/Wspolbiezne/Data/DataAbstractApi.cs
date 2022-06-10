@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Data
 {
@@ -12,6 +11,10 @@ namespace Data
         public abstract void StartMove();
         public abstract void StopMove();
         public abstract Board GetBoard();
+
+        public abstract object FileLocker { get; }
+
+        public abstract string FileName { get; }
         
         public static DataAbstractApi CreateApi()
                 {

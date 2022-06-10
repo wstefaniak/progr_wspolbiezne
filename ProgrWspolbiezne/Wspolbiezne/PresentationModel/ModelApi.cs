@@ -31,8 +31,8 @@ namespace PresentationModel
 
         public override void StopMove()
         {
-            board?.StopMove();
-            ballModel?.Clear();
+            board.StopMove();
+            ballModel.Clear();
         }
     }
 }

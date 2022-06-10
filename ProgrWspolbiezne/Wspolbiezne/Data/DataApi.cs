@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 
 namespace Data
 {
@@ -39,6 +36,15 @@ namespace Data
         public override ObservableCollection<Ball> GetBalls()
         {
             return _board.Balls;
+        }
+
+        public override object FileLocker
+        {
+            get => _board.FileLocker;
+        }
+        public override string FileName
+        {
+            get => _board.FileName;
         }
     }
 }

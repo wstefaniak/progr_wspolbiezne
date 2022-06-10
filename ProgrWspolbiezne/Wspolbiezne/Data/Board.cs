@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.IO;
 
 
 namespace Data
@@ -16,7 +18,8 @@ namespace Data
         private List<Task> _tasks = new List<Task>();
         public CancellationTokenSource _cts;
         public CancellationToken _ct;
-        private object _locker = new object();
+        private object _fileLocker = new object();
+        string _fileName = "logs.json";
 
         public Board()
         {
@@ -29,6 +32,10 @@ namespace Data
         public ObservableCollection<Ball> Balls { get => _balls; }
 
         public int TaskAmount { get => _tasks.Count; }
+
+        public object FileLocker { get => _fileLocker; }
+
+        public string FileName { get => _fileName; }
 
         public void CreateBalls(int amount)
         {
@@ -74,10 +81,6 @@ namespace Data
                     while (true)
                     {
                         await Task.Delay(10);
-                        lock (_locker)
-                        {
-                            ball.Move();
-                        }
                         ball.Move();
                         try { _ct.ThrowIfCancellationRequested(); }
                         catch (OperationCanceledException) { break; }
@@ -85,6 +88,20 @@ namespace Data
                 });
                 _tasks.Add(task);
             }
+            _tasks.Add(Task.Run(async () =>
+            {
+                File.WriteAllText(_fileName, string.Empty);
+                while (true)
+                {
+                    var options = new JsonSerializerOptions { WriteIndented = true };
+                    string str = "[ \"Date\": \"" + DateTime.Now.Date.ToShortDateString() + "\" \"Time\": \"" + DateTime.Now.TimeOfDay.ToString()
+                               + "\"\n  \"Generated balls\":\n" + JsonSerializer.Serialize(_balls, options) + " ]\n \"Collisions\":\n";
+                    lock (_fileLocker) { File.AppendAllText(_fileName, str); }
+                    try { _ct.ThrowIfCancellationRequested(); }
+                    catch (OperationCanceledException) { break; }
+                    await Task.Delay(2000);
+                }
+            }));
         }
 
         public void Stop()

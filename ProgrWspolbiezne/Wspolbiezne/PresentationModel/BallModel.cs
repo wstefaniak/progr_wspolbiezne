@@ -1,5 +1,4 @@
 ﻿using Logic;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -40,7 +39,7 @@ namespace PresentationModel
             }
         }
 
-        public int Radius { get => _radius*2; }
+        public int Radius { get => _radius * 2; } //Potrzebne do rysowania kol
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void BallPropertyChanged(object obj, PropertyChangedEventArgs args)

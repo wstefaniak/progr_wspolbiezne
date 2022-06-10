@@ -20,6 +20,10 @@ namespace Logic
         public abstract void StopMove();
         public abstract ObservableCollection<Ball> Balls { get; }
         public abstract List<BallMethods> GetBalls();
+        public abstract object FileLocker { get; }
+        public abstract string FileName { get; }
+        public abstract void Bounce(Ball ball1, Ball ball2);
+        public abstract void Collision(int Width, int Height, Ball ball);
     }
 
     

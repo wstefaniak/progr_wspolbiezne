@@ -1,7 +1,8 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
+using System;
 
 namespace Data
 {
@@ -12,6 +13,7 @@ namespace Data
         private float _mass;
         public int Radius { get; } = 25;
         
+        [JsonIgnore]
         public Vector2 Center
         {
             get => _center;
@@ -28,7 +30,8 @@ namespace Data
             get { return _center.Y; }
             set { _center.Y = value; }
         }
-
+        
+        [JsonIgnore]
         public Vector2 MoveDirection
         {
             get => _moveDirection;
